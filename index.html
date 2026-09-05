@@ -1,0 +1,1087 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Aura | Discord Economy</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         LANDING PAGE
+         ========================================================= -->
+
+    <main
+        id="landing-page"
+        class="landing-page"
+    >
+
+        <div class="landing-background"></div>
+
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                ✦ AURA ECONOMY
+            </div>
+
+
+            <h1>
+                Welcome to
+                <span>Aura</span>
+            </h1>
+
+
+            <p class="hero-description">
+
+                Build your Aura.
+                Compete on the leaderboard.
+                Invest in the market.
+                Rule the economy.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <!-- Discord OAuth login -->
+                <a
+                    id="login-button"
+                    class="primary-button"
+                    href="#"
+                >
+
+                    <span class="discord-icon">
+                        ◉
+                    </span>
+
+                    Login with Discord
+
+                </a>
+
+
+                <!-- Discord bot invite -->
+                <a
+                    id="invite-button"
+                    class="secondary-button"
+                    href="#"
+                >
+
+                    <span>
+                        ＋
+                    </span>
+
+                    Add Aura to Server
+
+                </a>
+
+
+            </div>
+
+
+            <div class="hero-status">
+
+                <span class="status-dot"></span>
+
+                Aura is online
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         DASHBOARD
+         ========================================================= -->
+
+    <main
+        id="dashboard-page"
+        class="dashboard-page hidden"
+    >
+
+
+        <!-- =====================================================
+             SIDEBAR
+             ===================================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- LOGO -->
+
+            <div class="sidebar-logo">
+
+                <div class="logo-symbol">
+                    A
+                </div>
+
+
+                <div class="logo-text">
+
+                    <h2>
+                        Aura
+                    </h2>
+
+                    <span>
+                        Economy
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="navigation">
+
+
+                <p class="navigation-title">
+                    MAIN
+                </p>
+
+
+                <button
+                    class="nav-item active"
+                    data-panel="overview"
+                    type="button"
+                >
+
+                    <span>
+                        ⌂
+                    </span>
+
+                    Overview
+
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    data-panel="profile"
+                    type="button"
+                >
+
+                    <span>
+                        ♙
+                    </span>
+
+                    My Profile
+
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    data-panel="leaderboard"
+                    type="button"
+                >
+
+                    <span>
+                        ♛
+                    </span>
+
+                    Leaderboard
+
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    data-panel="stock"
+                    type="button"
+                >
+
+                    <span>
+                        ↗
+                    </span>
+
+                    Stock Market
+
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    data-panel="investments"
+                    type="button"
+                >
+
+                    <span>
+                        ◆
+                    </span>
+
+                    Investments
+
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    data-panel="history"
+                    type="button"
+                >
+
+                    <span>
+                        ◷
+                    </span>
+
+                    History
+
+                </button>
+
+
+
+                <div class="navigation-spacer"></div>
+
+
+
+                <p class="navigation-title">
+                    SPECIAL
+                </p>
+
+
+                <!--
+                    Visible to everyone.
+
+                    Clicking this opens the authentication
+                    window before the administrator showcase.
+                -->
+
+                <button
+                    id="administrator-button"
+                    class="nav-item administrator-item"
+                    type="button"
+                >
+
+                    <span>
+                        😎
+                    </span>
+
+                    Administrator
+
+                </button>
+
+
+            </nav>
+
+
+
+            <!-- USER CARD -->
+
+            <div class="sidebar-user">
+
+
+                <div
+                    id="sidebar-avatar"
+                    class="user-avatar"
+                >
+                    ?
+                </div>
+
+
+                <div class="user-info">
+
+                    <strong id="sidebar-username">
+                        Loading...
+                    </strong>
+
+                    <span>
+                        Discord User
+                    </span>
+
+                </div>
+
+
+                <button
+                    id="logout-button"
+                    class="logout-button"
+                    type="button"
+                    title="Logout"
+                >
+                    ⏻
+                </button>
+
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =====================================================
+             DASHBOARD CONTENT
+             ===================================================== -->
+
+        <section class="dashboard-content">
+
+
+            <!-- HEADER -->
+
+            <header class="dashboard-header">
+
+
+                <div>
+
+                    <p class="header-small">
+                        DASHBOARD
+                    </p>
+
+
+                    <h1 id="dashboard-title">
+                        Overview
+                    </h1>
+
+                </div>
+
+
+
+                <div class="header-user">
+
+
+                    <div
+                        id="header-avatar"
+                        class="header-avatar"
+                    >
+                        ?
+                    </div>
+
+
+                    <div>
+
+                        <strong id="header-username">
+                            Loading...
+                        </strong>
+
+                        <span>
+                            Aura Member
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =================================================
+                 OVERVIEW
+                 ================================================= -->
+
+            <section
+                id="panel-overview"
+                class="dashboard-panel active-panel"
+            >
+
+
+                <div class="welcome-card">
+
+
+                    <div>
+
+                        <span class="card-label">
+                            WELCOME BACK
+                        </span>
+
+
+                        <h2>
+                            Your Aura journey continues.
+                        </h2>
+
+
+                        <p>
+                            Check your balance, investments,
+                            rank and the current market.
+                        </p>
+
+                    </div>
+
+
+                    <div class="welcome-icon">
+                        ✦
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="stats-grid">
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            ✦
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Aura Balance
+                            </p>
+
+                            <h3 id="stat-aura">
+                                —
+                            </h3>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            ♛
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Global Rank
+                            </p>
+
+                            <h3 id="stat-rank">
+                                —
+                            </h3>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            ↗
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Stock Price
+                            </p>
+
+                            <h3 id="stat-stock">
+                                —
+                            </h3>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            ◆
+                        </span>
+
+                        <div>
+
+                            <p>
+                                Investment
+                            </p>
+
+                            <h3 id="stat-investment">
+                                —
+                            </h3>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 PROFILE
+                 ================================================= -->
+
+            <section
+                id="panel-profile"
+                class="dashboard-panel"
+            >
+
+
+                <div class="panel-heading">
+
+                    <span>
+                        PROFILE
+                    </span>
+
+                    <h2>
+                        My Profile
+                    </h2>
+
+                </div>
+
+
+
+                <div class="profile-card">
+
+
+                    <div
+                        id="profile-avatar"
+                        class="profile-avatar"
+                    >
+                        ?
+                    </div>
+
+
+                    <div class="profile-details">
+
+
+                        <h2 id="profile-username">
+                            Loading...
+                        </h2>
+
+
+                        <p id="profile-id">
+                            Discord ID: —
+                        </p>
+
+
+                        <div class="profile-stats">
+
+
+                            <div>
+
+                                <span>
+                                    Aura
+                                </span>
+
+                                <strong id="profile-aura">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Global Rank
+                                </span>
+
+                                <strong id="profile-rank">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 LEADERBOARD
+                 ================================================= -->
+
+            <section
+                id="panel-leaderboard"
+                class="dashboard-panel"
+            >
+
+
+                <div class="panel-heading">
+
+                    <span>
+                        GLOBAL
+                    </span>
+
+                    <h2>
+                        Leaderboard
+                    </h2>
+
+                </div>
+
+
+
+                <div class="leaderboard-card">
+
+
+                    <div class="leaderboard-header">
+
+                        <span>
+                            Rank
+                        </span>
+
+                        <span>
+                            User
+                        </span>
+
+                        <span>
+                            Aura
+                        </span>
+
+                    </div>
+
+
+                    <div id="leaderboard-list">
+
+                        <div class="empty-state">
+
+                            Leaderboard data will appear here.
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 STOCK MARKET
+                 ================================================= -->
+
+            <section
+                id="panel-stock"
+                class="dashboard-panel"
+            >
+
+
+                <div class="panel-heading">
+
+                    <span>
+                        MARKET
+                    </span>
+
+                    <h2>
+                        Stock Market
+                    </h2>
+
+                </div>
+
+
+
+                <div class="market-card">
+
+
+                    <div class="market-price">
+
+
+                        <span>
+                            Current Stock Price
+                        </span>
+
+
+                        <strong id="market-price">
+                            —
+                        </strong>
+
+
+                        <small id="market-change">
+                            Waiting for market data...
+                        </small>
+
+
+                    </div>
+
+
+
+                    <div class="market-chart">
+
+
+                        <div
+                            id="stock-chart"
+                            class="chart-placeholder"
+                        >
+
+                            <span>
+                                📈
+                            </span>
+
+                            <p>
+                                Market chart will appear here.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 INVESTMENTS
+                 ================================================= -->
+
+            <section
+                id="panel-investments"
+                class="dashboard-panel"
+            >
+
+
+                <div class="panel-heading">
+
+                    <span>
+                        PORTFOLIO
+                    </span>
+
+                    <h2>
+                        Investments
+                    </h2>
+
+                </div>
+
+
+
+                <div class="investment-card">
+
+
+                    <div>
+
+                        <span>
+                            Shares
+                        </span>
+
+                        <strong id="investment-shares">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Buy Price
+                        </span>
+
+                        <strong id="investment-buy-price">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Current Value
+                        </span>
+
+                        <strong id="investment-value">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Profit / Loss
+                        </span>
+
+                        <strong id="investment-profit">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 HISTORY
+                 ================================================= -->
+
+            <section
+                id="panel-history"
+                class="dashboard-panel"
+            >
+
+
+                <div class="panel-heading">
+
+                    <span>
+                        ACTIVITY
+                    </span>
+
+                    <h2>
+                        History
+                    </h2>
+
+                </div>
+
+
+
+                <div
+                    id="history-list"
+                    class="history-list"
+                >
+
+                    <div class="empty-state">
+
+                        Your Aura activity will appear here.
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         ADMINISTRATOR AUTHENTICATION OVERLAY
+         ========================================================= -->
+
+    <div
+        id="admin-overlay"
+        class="admin-overlay hidden"
+    >
+
+
+        <!-- blurred dashboard remains behind this -->
+
+
+        <div
+            class="admin-auth-window"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-title"
+        >
+
+
+            <button
+                id="admin-close"
+                class="modal-close"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+
+            <div class="admin-icon">
+                😎
+            </div>
+
+
+
+            <span class="admin-tag">
+                RESTRICTED AREA
+            </span>
+
+
+
+            <h2 id="admin-title">
+                Administrator Access
+            </h2>
+
+
+
+            <p class="admin-description">
+                Enter Authentication Code
+            </p>
+
+
+
+            <form id="admin-auth-form">
+
+
+                <label
+                    for="admin-code"
+                    class="sr-only"
+                >
+                    Authentication Code
+                </label>
+
+
+                <input
+                    id="admin-code"
+                    type="password"
+                    placeholder="Authentication code"
+                    autocomplete="off"
+                    maxlength="128"
+                    required
+                >
+
+
+                <p
+                    id="admin-error"
+                    class="admin-error hidden"
+                >
+                    ❌ Invalid authentication code.
+                </p>
+
+
+                <button
+                    type="submit"
+                    class="authenticate-button"
+                >
+                    Authenticate
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================================================
+         ADMINISTRATOR SHOWCASE
+         ========================================================= -->
+
+    <main
+        id="admin-panel"
+        class="admin-page hidden"
+    >
+
+
+        <header class="admin-header">
+
+
+            <button
+                id="admin-back"
+                class="back-button"
+                type="button"
+            >
+                ← Back to Dashboard
+            </button>
+
+
+            <div>
+
+                <span>
+                    😎 ADMINISTRATOR
+                </span>
+
+                <h1>
+                    Administrator
+                </h1>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!--
+            Intentionally mostly empty.
+
+            This is the authenticated show-off page.
+        -->
+
+        <section class="admin-showcase">
+
+
+            <div class="showcase-icon">
+                😎
+            </div>
+
+
+            <span class="showcase-status">
+                AUTHENTICATED
+            </span>
+
+
+            <h2>
+                Administrator
+            </h2>
+
+
+            <p>
+                Aura control access granted.
+            </p>
+
+
+            <div class="empty-admin-space"></div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
+```
