@@ -9,14 +9,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // ELEMENTS
     // ========================================================
 
-    const landingPage = document.getElementById("landing-page");
-    const dashboardPage = document.getElementById("dashboard-page");
-    const adminPanel = document.getElementById("admin-panel");
+    const landingPage =
+        document.getElementById("landing-page");
 
-    const loginButton = document.getElementById("login-button");
-    const inviteButton = document.getElementById("invite-button");
+    const dashboardPage =
+        document.getElementById("dashboard-page");
 
-    const navItems = document.querySelectorAll(".nav-item");
+    const adminPanel =
+        document.getElementById("admin-panel");
+
+    const loginButton =
+        document.getElementById("login-button");
+
+    const inviteButton =
+        document.getElementById("invite-button");
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
     const dashboardPanels =
         document.querySelectorAll(".dashboard-panel");
 
@@ -53,7 +63,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // ========================================================
 
     /*
-     * Paste your Discord OAuth2 invite URL here.
+     * Wispbyte Flask backend.
+     *
+     * Your website is running through Live Server,
+     * while bot.py + Flask are running on Wispbyte.
+     */
+
+    const API_BASE_URL =
+        "https://aurafarmer.wisp.uno";
+
+
+    /*
+     * Aura bot invite.
      */
 
     const DISCORD_INVITE_URL =
@@ -61,10 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /*
-     * TEMPORARY ADMIN CODE
+     * TEMPORARY FRONTEND ADMIN CODE.
      *
-     * This is only for the frontend showcase.
-     * It is NOT secure authentication.
+     * This is NOT secure authentication.
+     * Keep this only if you still want the current
+     * frontend administrator panel.
      */
 
     const ADMIN_CODE = "777";
@@ -74,17 +96,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // DISCORD LOGIN
     // ========================================================
 
-   if (loginButton) {
+    if (loginButton) {
 
-        loginButton.addEventListener("click", event => {
+        loginButton.addEventListener(
+            "click",
+            event => {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            // Start the real Discord OAuth2 flow.
-            // The Flask backend handles the client secret.
-            window.location.href = "/auth/discord";
+                /*
+                 * Send the user to the Flask OAuth endpoint
+                 * running on Wispbyte.
+                 */
 
-        });
+                window.location.href =
+                    `${API_BASE_URL}/auth/discord`;
+
+            }
+        );
 
     }
 
@@ -96,15 +125,27 @@ document.addEventListener("DOMContentLoaded", () => {
     function showDashboard() {
 
         if (landingPage) {
-            landingPage.classList.add("hidden");
+
+            landingPage.classList.add(
+                "hidden"
+            );
+
         }
 
         if (adminPanel) {
-            adminPanel.classList.add("hidden");
+
+            adminPanel.classList.add(
+                "hidden"
+            );
+
         }
 
         if (dashboardPage) {
-            dashboardPage.classList.remove("hidden");
+
+            dashboardPage.classList.remove(
+                "hidden"
+            );
+
         }
 
     }
@@ -117,16 +158,52 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLanding() {
 
         if (dashboardPage) {
-            dashboardPage.classList.add("hidden");
+
+            dashboardPage.classList.add(
+                "hidden"
+            );
+
         }
 
         if (adminPanel) {
-            adminPanel.classList.add("hidden");
+
+            adminPanel.classList.add(
+                "hidden"
+            );
+
         }
 
         if (landingPage) {
-            landingPage.classList.remove("hidden");
+
+            landingPage.classList.remove(
+                "hidden"
+            );
+
         }
+
+    }
+
+
+    // ========================================================
+    // INVITE BUTTON
+    // ========================================================
+
+    if (inviteButton) {
+
+        inviteButton.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                window.open(
+                    DISCORD_INVITE_URL,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+            }
+        );
 
     }
 
@@ -138,72 +215,89 @@ document.addEventListener("DOMContentLoaded", () => {
     navItems.forEach(item => {
 
         /*
-         * Administrator is handled separately.
+         * Administrator button is handled separately.
          */
 
-        if (item.id === "administrator-button") {
+        if (
+            item.id ===
+            "administrator-button"
+        ) {
+
             return;
+
         }
 
 
-        item.addEventListener("click", () => {
+        item.addEventListener(
+            "click",
+            () => {
 
-            const panelName =
-                item.dataset.panel;
-
-            if (!panelName) {
-                return;
-            }
+                const panelName =
+                    item.dataset.panel;
 
 
-            // Remove active state
-            navItems.forEach(nav => {
+                if (!panelName) {
 
-                nav.classList.remove("active");
+                    return;
 
-            });
-
-
-            // Activate clicked button
-            item.classList.add("active");
+                }
 
 
-            // Hide every panel
-            dashboardPanels.forEach(panel => {
+                // Remove active state
+                navItems.forEach(nav => {
 
-                panel.classList.remove("active-panel");
+                    nav.classList.remove(
+                        "active"
+                    );
 
-            });
+                });
 
 
-            // Find requested panel
-            const targetPanel =
-                document.getElementById(
-                    `panel-${panelName}`
+                // Activate clicked item
+                item.classList.add(
+                    "active"
                 );
 
 
-            if (targetPanel) {
+                // Hide all dashboard panels
+                dashboardPanels.forEach(panel => {
 
-                targetPanel.classList.add(
-                    "active-panel"
-                );
+                    panel.classList.remove(
+                        "active-panel"
+                    );
+
+                });
+
+
+                // Find requested panel
+                const targetPanel =
+                    document.getElementById(
+                        `panel-${panelName}`
+                    );
+
+
+                if (targetPanel) {
+
+                    targetPanel.classList.add(
+                        "active-panel"
+                    );
+
+                }
+
+
+                // Update dashboard title
+                if (dashboardTitle) {
+
+                    const title =
+                        item.textContent.trim();
+
+                    dashboardTitle.textContent =
+                        title;
+
+                }
 
             }
-
-
-            // Update header title
-            if (dashboardTitle) {
-
-                const title =
-                    item.textContent.trim();
-
-                dashboardTitle.textContent =
-                    title;
-
-            }
-
-        });
+        );
 
     });
 
@@ -215,11 +309,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function openAdminModal() {
 
         if (!adminOverlay) {
+
             return;
+
         }
 
 
-        adminOverlay.classList.remove("hidden");
+        adminOverlay.classList.remove(
+            "hidden"
+        );
+
 
         document.body.style.overflow =
             "hidden";
@@ -229,18 +328,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
             adminCode.value = "";
 
-            setTimeout(() => {
 
-                adminCode.focus();
+            setTimeout(
+                () => {
 
-            }, 100);
+                    adminCode.focus();
+
+                },
+                100
+            );
 
         }
 
 
         if (adminError) {
 
-            adminError.classList.add("hidden");
+            adminError.classList.add(
+                "hidden"
+            );
 
         }
 
@@ -250,11 +355,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeAdminModal() {
 
         if (!adminOverlay) {
+
             return;
+
         }
 
 
-        adminOverlay.classList.add("hidden");
+        adminOverlay.classList.add(
+            "hidden"
+        );
+
 
         document.body.style.overflow =
             "";
@@ -282,7 +392,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Click outside window
+    // ========================================================
+    // CLICK OUTSIDE ADMIN MODAL
+    // ========================================================
+
     if (adminOverlay) {
 
         adminOverlay.addEventListener(
@@ -304,7 +417,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Escape key
+    // ========================================================
+    // ESCAPE KEY
+    // ========================================================
+
     document.addEventListener(
         "keydown",
         event => {
@@ -312,7 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (
                 event.key === "Escape" &&
                 adminOverlay &&
-                !adminOverlay.classList.contains("hidden")
+                !adminOverlay.classList.contains(
+                    "hidden"
+                )
             ) {
 
                 closeAdminModal();
@@ -347,7 +465,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     ADMIN_CODE
                 ) {
 
-                    // Correct
                     if (adminError) {
 
                         adminError.classList.add(
@@ -360,7 +477,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     closeAdminModal();
 
 
-                    // Hide dashboard
                     if (dashboardPage) {
 
                         dashboardPage.classList.add(
@@ -370,7 +486,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
 
-                    // Show admin panel
                     if (adminPanel) {
 
                         adminPanel.classList.remove(
@@ -381,13 +496,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     console.log(
-                        "😎 Administrator authentication successful."
+                        "Administrator authentication successful."
                     );
 
 
                 } else {
 
-                    // Wrong code
                     if (adminError) {
 
                         adminError.textContent =
@@ -400,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
 
-                    // Shake window
+                    // Shake authentication window
                     const authWindow =
                         document.querySelector(
                             ".admin-auth-window"
@@ -478,8 +592,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
 
                     await fetch(
-                        "/logout",
+                        `${API_BASE_URL}/logout`,
                         {
+                            method: "GET",
                             credentials: "include"
                         }
                     );
@@ -493,7 +608,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
+
                 showLanding();
+
 
                 console.log(
                     "Logged out."
@@ -506,40 +623,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ========================================================
-    // INITIAL STATE / DISCORD SESSION
+    // CHECK DISCORD SESSION
     // ========================================================
 
-    if (adminPanel) {
-        adminPanel.classList.add("hidden");
-    }
-
-    /*
-     * Check the Flask Discord session.
-     * After OAuth callback, Flask returns to "/" and this
-     * automatically opens the dashboard for the logged-in user.
-     */
     async function checkDiscordSession() {
 
         try {
 
-            const response = await fetch(
-                "/api/me",
-                {
-                    credentials: "include"
-                }
-            );
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/api/me`,
+                    {
+                        credentials: "include"
+                    }
+                );
+
 
             if (!response.ok) {
+
                 throw new Error(
                     `Session check returned ${response.status}`
                 );
+
             }
 
-            const data = await response.json();
+
+            const data =
+                await response.json();
+
 
             if (data.logged_in) {
 
                 showDashboard();
+
 
                 console.log(
                     "Discord session detected. Dashboard opened."
@@ -558,11 +674,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 error
             );
 
+
             showLanding();
 
         }
 
     }
+
 
     checkDiscordSession();
 
@@ -576,226 +694,581 @@ document.addEventListener("DOMContentLoaded", () => {
         "font-size: 22px; font-weight: bold;"
     );
 
+
     console.log(
         "Frontend loaded successfully."
     );
 
-    // ============================================================
-// AURA LIVE DATA
-// ============================================================
 
-async function fetchAuraData() {
-    try {
+    console.log(
+        "Backend:",
+        API_BASE_URL
+    );
 
-        const sessionResponse = await fetch(
-            "/api/me",
-            {
-                credentials: "include"
+
+    // ========================================================
+    // LIVE AURA DATA
+    // ========================================================
+
+    async function fetchAuraData() {
+
+        try {
+
+            // -----------------------------------------------
+            // Check login session
+            // -----------------------------------------------
+
+            const sessionResponse =
+                await fetch(
+                    `${API_BASE_URL}/api/me`,
+                    {
+                        credentials: "include"
+                    }
+                );
+
+
+            if (!sessionResponse.ok) {
+
+                return;
+
             }
-        );
 
-        if (!sessionResponse.ok) {
-            return;
-        }
 
-        const session = await sessionResponse.json();
+            const session =
+                await sessionResponse.json();
 
-        if (!session.logged_in) {
-            return;
-        }
 
-        const response = await fetch(
-            "/api/dashboard",
-            {
-                credentials: "include"
+            if (!session.logged_in) {
+
+                return;
+
             }
-        );
-
-        if (!response.ok) {
-            throw new Error(`API returned ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // -------------------------------
-        // PROFILE
-        // -------------------------------
-
-        if (data.user) {
-            document.getElementById("sidebar-username").textContent =
-                data.user.username ?? "Unknown";
-
-            document.getElementById("header-username").textContent =
-                data.user.username ?? "Unknown";
-
-            document.getElementById("profile-username").textContent =
-                data.user.username ?? "Unknown";
-
-            document.getElementById("profile-id").textContent =
-                `Discord ID: ${data.user.id ?? "—"}`;
-
-            document.getElementById("stat-aura").textContent =
-                Number(data.user.aura ?? 0).toLocaleString();
-
-            document.getElementById("profile-aura").textContent =
-                Number(data.user.aura ?? 0).toLocaleString();
-
-            document.getElementById("stat-rank").textContent =
-                data.user.rank ? `#${data.user.rank}` : "—";
-
-            document.getElementById("profile-rank").textContent =
-                data.user.rank ? `#${data.user.rank}` : "—";
-        }
 
 
-        // -------------------------------
-        // STOCK
-        // -------------------------------
+            // -----------------------------------------------
+            // Get dashboard data
+            // -----------------------------------------------
 
-        if (data.stock) {
-            document.getElementById("stat-stock").textContent =
-                Number(data.stock.price ?? 0).toFixed(2);
-
-            document.getElementById("market-price").textContent =
-                Number(data.stock.price ?? 0).toFixed(2);
-
-            const change =
-                Number(data.stock.change ?? 0);
-
-            document.getElementById("market-change").textContent =
-                `${change >= 0 ? "+" : ""}${change.toFixed(2)}%`;
-        }
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/api/dashboard`,
+                    {
+                        credentials: "include"
+                    }
+                );
 
 
-        // -------------------------------
-        // INVESTMENTS
-        // -------------------------------
+            if (!response.ok) {
 
-        if (data.investment) {
-            document.getElementById("investment-shares").textContent =
-                Number(data.investment.shares ?? 0).toLocaleString();
+                throw new Error(
+                    `API returned ${response.status}`
+                );
 
-            document.getElementById("investment-buy-price").textContent =
-                Number(data.investment.buy_price ?? 0).toFixed(2);
-
-            document.getElementById("investment-value").textContent =
-                Number(data.investment.value ?? 0).toLocaleString();
-
-            document.getElementById("investment-profit").textContent =
-                Number(data.investment.profit ?? 0).toLocaleString();
-
-            document.getElementById("stat-investment").textContent =
-                Number(data.investment.value ?? 0).toLocaleString();
-        }
-
-
-        // -------------------------------
-        // LEADERBOARD
-        // -------------------------------
-
-        if (Array.isArray(data.leaderboard)) {
-
-            const leaderboard =
-                document.getElementById("leaderboard-list");
-
-            leaderboard.innerHTML = "";
-
-            data.leaderboard.forEach((user, index) => {
-
-                const row =
-                    document.createElement("div");
-
-                row.className = "leaderboard-row";
-
-                row.innerHTML = `
-                    <span>#${index + 1}</span>
-                    <span>${escapeHTML(user.username ?? "Unknown")}</span>
-                    <strong>
-                        ${Number(user.aura ?? 0).toLocaleString()} ✦
-                    </strong>
-                `;
-
-                leaderboard.appendChild(row);
-            });
-        }
-
-
-        // -------------------------------
-        // HISTORY
-        // -------------------------------
-
-        if (Array.isArray(data.history)) {
-
-            const history =
-                document.getElementById("history-list");
-
-            history.innerHTML = "";
-
-            if (data.history.length === 0) {
-
-                history.innerHTML = `
-                    <div class="empty-state">
-                        No activity yet.
-                    </div>
-                `;
-
-            } else {
-
-                data.history.forEach(entry => {
-
-                    const item =
-                        document.createElement("div");
-
-                    item.className = "history-item";
-
-                    item.innerHTML = `
-                        <strong>
-                            ${escapeHTML(entry.action ?? "Activity")}
-                        </strong>
-
-                        <span>
-                            ${escapeHTML(entry.details ?? "")}
-                        </span>
-                    `;
-
-                    history.appendChild(item);
-                });
             }
+
+
+            const data =
+                await response.json();
+
+
+            // =================================================
+            // USER DATA
+            // =================================================
+
+            if (data.user) {
+
+                const username =
+                    data.user.username ??
+                    "Unknown";
+
+
+                const userId =
+                    data.user.id ??
+                    "—";
+
+
+                const aura =
+                    Number(
+                        data.user.aura ?? 0
+                    ).toLocaleString();
+
+
+                const rank =
+                    data.user.rank
+                        ? `#${data.user.rank}`
+                        : "—";
+
+
+                const sidebarUsername =
+                    document.getElementById(
+                        "sidebar-username"
+                    );
+
+
+                const headerUsername =
+                    document.getElementById(
+                        "header-username"
+                    );
+
+
+                const profileUsername =
+                    document.getElementById(
+                        "profile-username"
+                    );
+
+
+                const profileId =
+                    document.getElementById(
+                        "profile-id"
+                    );
+
+
+                const statAura =
+                    document.getElementById(
+                        "stat-aura"
+                    );
+
+
+                const profileAura =
+                    document.getElementById(
+                        "profile-aura"
+                    );
+
+
+                const statRank =
+                    document.getElementById(
+                        "stat-rank"
+                    );
+
+
+                const profileRank =
+                    document.getElementById(
+                        "profile-rank"
+                    );
+
+
+                if (sidebarUsername) {
+
+                    sidebarUsername.textContent =
+                        username;
+
+                }
+
+
+                if (headerUsername) {
+
+                    headerUsername.textContent =
+                        username;
+
+                }
+
+
+                if (profileUsername) {
+
+                    profileUsername.textContent =
+                        username;
+
+                }
+
+
+                if (profileId) {
+
+                    profileId.textContent =
+                        `Discord ID: ${userId}`;
+
+                }
+
+
+                if (statAura) {
+
+                    statAura.textContent =
+                        aura;
+
+                }
+
+
+                if (profileAura) {
+
+                    profileAura.textContent =
+                        aura;
+
+                }
+
+
+                if (statRank) {
+
+                    statRank.textContent =
+                        rank;
+
+                }
+
+
+                if (profileRank) {
+
+                    profileRank.textContent =
+                        rank;
+
+                }
+
+            }
+
+
+            // =================================================
+            // STOCK DATA
+            // =================================================
+
+            if (data.stock) {
+
+                const price =
+                    Number(
+                        data.stock.price ?? 0
+                    ).toFixed(2);
+
+
+                const change =
+                    Number(
+                        data.stock.change ?? 0
+                    );
+
+
+                const statStock =
+                    document.getElementById(
+                        "stat-stock"
+                    );
+
+
+                const marketPrice =
+                    document.getElementById(
+                        "market-price"
+                    );
+
+
+                const marketChange =
+                    document.getElementById(
+                        "market-change"
+                    );
+
+
+                if (statStock) {
+
+                    statStock.textContent =
+                        price;
+
+                }
+
+
+                if (marketPrice) {
+
+                    marketPrice.textContent =
+                        price;
+
+                }
+
+
+                if (marketChange) {
+
+                    marketChange.textContent =
+                        `${change >= 0 ? "+" : ""}${change.toFixed(2)}%`;
+
+                }
+
+            }
+
+
+            // =================================================
+            // INVESTMENT DATA
+            // =================================================
+
+            if (data.investment) {
+
+                const investmentShares =
+                    document.getElementById(
+                        "investment-shares"
+                    );
+
+
+                const investmentBuyPrice =
+                    document.getElementById(
+                        "investment-buy-price"
+                    );
+
+
+                const investmentValue =
+                    document.getElementById(
+                        "investment-value"
+                    );
+
+
+                const investmentProfit =
+                    document.getElementById(
+                        "investment-profit"
+                    );
+
+
+                const statInvestment =
+                    document.getElementById(
+                        "stat-investment"
+                    );
+
+
+                if (investmentShares) {
+
+                    investmentShares.textContent =
+                        Number(
+                            data.investment.shares ?? 0
+                        ).toLocaleString();
+
+                }
+
+
+                if (investmentBuyPrice) {
+
+                    investmentBuyPrice.textContent =
+                        Number(
+                            data.investment.buy_price ?? 0
+                        ).toFixed(2);
+
+                }
+
+
+                if (investmentValue) {
+
+                    investmentValue.textContent =
+                        Number(
+                            data.investment.value ?? 0
+                        ).toLocaleString();
+
+                }
+
+
+                if (investmentProfit) {
+
+                    investmentProfit.textContent =
+                        Number(
+                            data.investment.profit ?? 0
+                        ).toLocaleString();
+
+                }
+
+
+                if (statInvestment) {
+
+                    statInvestment.textContent =
+                        Number(
+                            data.investment.value ?? 0
+                        ).toLocaleString();
+
+                }
+
+            }
+
+
+            // =================================================
+            // LEADERBOARD
+            // =================================================
+
+            if (
+                Array.isArray(
+                    data.leaderboard
+                )
+            ) {
+
+                const leaderboard =
+                    document.getElementById(
+                        "leaderboard-list"
+                    );
+
+
+                if (leaderboard) {
+
+                    leaderboard.innerHTML =
+                        "";
+
+
+                    data.leaderboard.forEach(
+                        (user, index) => {
+
+                            const row =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            row.className =
+                                "leaderboard-row";
+
+
+                            row.innerHTML = `
+                                <span>
+                                    #${index + 1}
+                                </span>
+
+                                <span>
+                                    ${escapeHTML(
+                                        user.username ??
+                                        "Unknown"
+                                    )}
+                                </span>
+
+                                <strong>
+                                    ${Number(
+                                        user.aura ?? 0
+                                    ).toLocaleString()} ✦
+                                </strong>
+                            `;
+
+
+                            leaderboard.appendChild(
+                                row
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+
+
+            // =================================================
+            // HISTORY
+            // =================================================
+
+            if (
+                Array.isArray(
+                    data.history
+                )
+            ) {
+
+                const history =
+                    document.getElementById(
+                        "history-list"
+                    );
+
+
+                if (history) {
+
+                    history.innerHTML =
+                        "";
+
+
+                    if (
+                        data.history.length ===
+                        0
+                    ) {
+
+                        history.innerHTML = `
+                            <div class="empty-state">
+                                No activity yet.
+                            </div>
+                        `;
+
+                    } else {
+
+                        data.history.forEach(
+                            entry => {
+
+                                const item =
+                                    document.createElement(
+                                        "div"
+                                    );
+
+
+                                item.className =
+                                    "history-item";
+
+
+                                item.innerHTML = `
+                                    <strong>
+                                        ${escapeHTML(
+                                            entry.action ??
+                                            "Activity"
+                                        )}
+                                    </strong>
+
+                                    <span>
+                                        ${escapeHTML(
+                                            entry.details ??
+                                            ""
+                                        )}
+                                    </span>
+                                `;
+
+
+                                history.appendChild(
+                                    item
+                                );
+
+                            }
+                        );
+
+                    }
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Aura live-data update failed:",
+                error
+            );
+
         }
 
-    } catch (error) {
-
-        console.error(
-            "Aura live-data update failed:",
-            error
-        );
     }
-}
 
 
-// ============================================================
-// SAFE HTML TEXT
-// ============================================================
+    // ========================================================
+    // SAFE HTML
+    // ========================================================
 
-function escapeHTML(value) {
+    function escapeHTML(value) {
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
+        return String(value)
+            .replaceAll(
+                "&",
+                "&amp;"
+            )
+            .replaceAll(
+                "<",
+                "&lt;"
+            )
+            .replaceAll(
+                ">",
+                "&gt;"
+            )
+            .replaceAll(
+                '"',
+                "&quot;"
+            )
+            .replaceAll(
+                "'",
+                "&#039;"
+            );
+
+    }
 
 
-// ============================================================
-// AUTOMATIC UPDATES
-// ============================================================
+    // ========================================================
+    // INITIAL DATA LOAD
+    // ========================================================
 
-fetchAuraData();
-
-setInterval(() => {
     fetchAuraData();
-}, 5000);
+
+
+    // ========================================================
+    // AUTOMATIC DATA UPDATE
+    // ========================================================
+
+    setInterval(
+        () => {
+
+            fetchAuraData();
+
+        },
+        5000
+    );
 
 });
